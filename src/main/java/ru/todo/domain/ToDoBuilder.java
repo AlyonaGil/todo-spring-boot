@@ -1,7 +1,7 @@
 package ru.todo.domain;
 
 public class ToDoBuilder {
-    private static ToDoBuilder instance = new ToDoBuilder();
+    private static final ToDoBuilder instance = new ToDoBuilder();
     private String id = null;
     private String description = "";
 

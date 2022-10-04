@@ -1,5 +1,6 @@
 package ru.todo.repository.impl;
 
+import org.springframework.stereotype.Repository;
 import ru.todo.domain.ToDo;
 import ru.todo.repository.CommonRepository;
 
@@ -10,9 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Repository
 public class ToDoRepository implements CommonRepository<ToDo> {
 
-    private Map<String, ToDo> toDos = new HashMap<>();
+    private final Map<String, ToDo> toDos = new HashMap<>();
 
     @Override
     public ToDo save(ToDo domain) {
