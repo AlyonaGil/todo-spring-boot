@@ -5,10 +5,7 @@ import ru.todo.domain.ToDo;
 import ru.todo.repository.CommonRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -20,7 +17,7 @@ public class ToDoRepository implements CommonRepository<ToDo> {
     public ToDo save(ToDo domain) {
         ToDo res = toDos.get(domain.getId());
         if (res != null){
-            res.setModified(LocalDateTime.now());
+            res.setModified(new Date());
             res.setDescription(domain.getDescription());
             res.setCompleted(domain.isCompleted());
             domain = res;
