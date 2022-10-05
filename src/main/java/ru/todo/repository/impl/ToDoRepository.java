@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.todo.domain.ToDo;
 import ru.todo.repository.CommonRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class ToDoRepository implements CommonRepository<ToDo> {
     public ToDo save(ToDo domain) {
         ToDo res = toDos.get(domain.getId());
         if (res != null){
-            res.setModified(new Date());
+            res.setModified(LocalDateTime.now());
             res.setDescription(domain.getDescription());
             res.setCompleted(domain.isCompleted());
             domain = res;

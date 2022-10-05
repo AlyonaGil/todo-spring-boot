@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -15,13 +14,13 @@ public class ToDo {
     @NotNull
     @NotBlank
     private String description;
-    private Date created;
-    private Date modified;
+    private LocalDateTime created;
+    private LocalDateTime modified;
     private boolean completed;
 
     public ToDo(){
         id = UUID.randomUUID().toString();
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
         created = date;
         modified = date;
     }
