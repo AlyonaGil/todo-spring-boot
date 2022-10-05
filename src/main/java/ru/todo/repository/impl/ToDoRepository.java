@@ -8,6 +8,7 @@ import ru.todo.domain.ToDo;
 import ru.todo.repository.CommonRepository;
 
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -16,9 +17,9 @@ public class ToDoRepository implements CommonRepository<ToDo> {
     private static final String SQL_INSERT = "insert into todo (id, " +
             "description, created, modified, completed) values (:id,:description," +
             ":created,:modified,:completed)";
-    private static final String SQL_QUERY_FIND_ALL = "select id, description, " +
-            "created, modified, completed from todo";
-    private static final String SQL_QUERY_FIND_BY_ID = SQL_QUERY_FIND_ALL + "where id = :id";
+    private static final String SQL_QUERY_FIND_ALL = "select id, description, created, " +
+            "modified, completed from todo";
+    private static final String SQL_QUERY_FIND_BY_ID = SQL_QUERY_FIND_ALL + " where id = :id";
     private static final String SQL_UPDATE = "update todo set description = " +
             ":description, modified = :modified, completed = :completed where id = :id";
     private static final String SQL_DELETE = "delete from todo where id = :id";
@@ -33,8 +34,8 @@ public class ToDoRepository implements CommonRepository<ToDo> {
         ToDo todo = new ToDo();
         todo.setId(rs.getString("id"));
         todo.setDescription(rs.getString("description"));
-        todo.setModified(rs.getDate("modified"));
-        todo.setCreated(rs.getDate("created"));
+        todo.setModified(rs.getTimestamp("modified").toLocalDateTime());
+        todo.setCreated(rs.getTimestamp("created").toLocalDateTime());
         todo.setCompleted(rs.getBoolean("completed"));
         return todo;
     };
@@ -43,7 +44,7 @@ public class ToDoRepository implements CommonRepository<ToDo> {
     public ToDo save(final ToDo domain) {
         ToDo res = findById(domain.getId());
         if (res != null){
-            res.setModified(new Date());
+            res.setModified(LocalDateTime.now());
             res.setDescription(domain.getDescription());
             res.setCompleted(domain.isCompleted());
             return upsert(res, SQL_UPDATE);
@@ -55,8 +56,8 @@ public class ToDoRepository implements CommonRepository<ToDo> {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("id",todo.getId());
         namedParameters.put("description",todo.getDescription());
-        namedParameters.put("created",todo.getCreated());
-        namedParameters.put("modified",todo.getModified());
+        namedParameters.put("created",java.sql.Timestamp.valueOf(todo.getCreated()));
+        namedParameters.put("modified",java.sql.Timestamp.valueOf(todo.getModified()));
         namedParameters.put("completed",todo.isCompleted());
         this.jdbcTemplate.update(sql,namedParameters);
         return findById(todo.getId());
