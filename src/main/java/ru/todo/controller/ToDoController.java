@@ -66,7 +66,7 @@ public class ToDoController {
                 .buildAndExpand(res.getId())
                 .toUri();
 
-        return ResponseEntity.ok().header("Location", location.toString()).build();
+        return ResponseEntity.ok().header("Location", location.toString()).body(res);
     }
 
     @RequestMapping(value="/todo", method = {RequestMethod.POST, RequestMethod.PUT})
@@ -82,7 +82,7 @@ public class ToDoController {
                 .path("/{id}")
                 .buildAndExpand(res.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(res);
     }
 
     @ExceptionHandler
