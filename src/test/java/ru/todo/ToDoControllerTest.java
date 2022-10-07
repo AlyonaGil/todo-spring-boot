@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.todo.domain.ToDo;
+import ru.todo.domain.ToDoBuilder;
 import ru.todo.repository.ToDoRepository;
 
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class ToDoControllerTest {
     }
 
     private ToDo createTestToDo(String description) {
-        ToDo todo = new ToDo(description);
+        ToDo todo = ToDoBuilder.create().withDescription(description).build();
         return repository.save(todo);
     }
 
