@@ -29,11 +29,11 @@ public class ToDo {
     }
     @PrePersist
     void onCreate() {
-        this.setCreated(LocalDateTime.now());
-        this.setModified(LocalDateTime.now());
+        this.setCreated(LocalDateTime.now().withNano(0));
+        this.setModified(LocalDateTime.now().withNano(0));
     }
     @PreUpdate
     void onUpdate() {
-        this.setModified(LocalDateTime.now());
+        this.setModified(LocalDateTime.now().withNano(0));
     }
 }
